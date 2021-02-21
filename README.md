@@ -16,7 +16,7 @@ Easy SSH management tool with encryption, you can think of alias for ssh connect
 **Save New Alias**
 
 ````shell
-    step -s -i /full/path/ssh/key/ IP@server
+    step -s -i /full/path/key/ IP@server
 ````
 ````shell
     -i flag is optional

@@ -13,7 +13,14 @@ func main() {
 }
 
 func help(){
-	fmt.Println(`step -h
-						line 2
-						line 3`)
+	fmt.Println(`
+	-h			Outputs this help
+	-s			Saves the alias for the spesified ssh
+	-s -i			Save alias with a key path
+
+	============
+	Create Alias
+	============
+	step -s demo_1 -i /full/path/key IP@server
+`)
 }
