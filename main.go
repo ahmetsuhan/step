@@ -3,8 +3,22 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
+	"os/user"
 )
+
+func init(){
+	usr, err := user.Current()
+	if err != nil {
+		log.Fatal( err )
+	}
+	fmt.Println( usr.HomeDir )
+	path := usr.HomeDir +"/step/"
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		os.Mkdir(path, 775)
+	}
+}
 
 func main() {
 	args := os.Args
