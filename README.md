@@ -27,4 +27,5 @@ Easy SSH management tool with encryption, you can think of alias for ssh connect
     step -h
 ````
 
-You can also use "tab" key to get all alias or search in alias like you do on the shell/bash
+**Todo**
+* Use Tab key to search alias names
