@@ -19,7 +19,7 @@ func save(path string){
 		return
 	}
 
-	if len(os.Args) < 3 {
+	if len(os.Args) < 4 {
 		help()
 		return
 	}
@@ -27,9 +27,8 @@ func save(path string){
 	var remote Remote
 	remote.Alias = os.Args[2]
 	remote.KeyPath = path
-	remote.Machine = os.Args[len(os.Args)-1]
 
-	ciphertext := encrypt("line2", pass)
+	remote.Machine = encrypt(os.Args[len(os.Args)-1], pass)
 	fmt.Printf("%s",ciphertext)
 }
 
