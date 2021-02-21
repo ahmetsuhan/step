@@ -24,7 +24,16 @@ func main() {
 	}
 
 	if saveCommand != "" {
-		//
+		fmt.Printf("Please provide a password to use as a key")
+		pass := readline()
+		fmt.Printf("Retype the password")
+		if pass != readline() {
+			fmt.Printf("%s","Please make sure that password matches.")
+			return
+		}
+
+		ciphertext := encrypt("line2", pass)
+		fmt.Printf("%s",ciphertext)
 	}
 
 }
