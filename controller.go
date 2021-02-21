@@ -10,17 +10,25 @@ import (
 	"os"
 )
 
-func save(){
-	fmt.Printf("Please provide a password to use as a key")
+func save(path string){
+	fmt.Printf("Please provide a password to use as a key\n")
 	pass := readline()
-	fmt.Printf("Retype the password")
+	fmt.Printf("Retype the password\n")
 	if pass != readline() {
 		fmt.Printf("%s","Please make sure that password matches.")
 		return
 	}
 
-	fmt.Printf("%v",os.Args)
-	return;
+	if len(os.Args) < 3 {
+		help()
+		return
+	}
+
+	var remote Remote
+	remote.Alias = os.Args[2]
+	remote.KeyPath = path
+	remote.Machine = os.Args[len(os.Args)-1]
+
 	ciphertext := encrypt("line2", pass)
 	fmt.Printf("%s",ciphertext)
 }

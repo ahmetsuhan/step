@@ -14,11 +14,15 @@ import (
 var dbPath string
 
 func init(){
+	if len(os.Args) < 2 {
+		help()
+		return
+	}
+
 	usr, err := user.Current()
 	if err != nil {
 		log.Fatal( err )
 	}
-	fmt.Println( usr.HomeDir )
 	path := usr.HomeDir +"/step/"
 	dbPath = path + "data.db"
 	if _, err := os.Stat(path); os.IsNotExist(err) {
@@ -30,34 +34,28 @@ func init(){
 }
 
 func main() {
-	args := os.Args
-	if len(args) < 2 {
-		help()
-		return
-	}
-
 
 	_, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		fmt.Printf("%s",err)
-		return;
+		return
 	}
 
-	helpCommand := *flag.String("h",""," -h")
-	saveCommand := *flag.String("s", "", " -s alias_name")
-
+	helpCommand := flag.String("h",""," -h")
+	saveCommand := flag.String("s", "", " -s alias_name")
+	path := flag.String("i",""," -i full path")
 	flag.Parse()
 
-	if helpCommand != "" {
+	if *helpCommand != "" {
 		help()
 		return
 	}
 
-	if saveCommand != "" {
-		save()
+	if *saveCommand != "" {
+		save(*path)
 		return
 	}
-
+	return
 	cmd:= exec.Command("ssh","")
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
