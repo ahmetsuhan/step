@@ -22,4 +22,9 @@ Easy SSH management tool with encryption, you can think of alias for ssh connect
     -i flag is optional
 ````
 
+**Need a hint ?**
+````shell
+    step -h
+````
+
 You can also use "tab" key to get all alias or search in alias like you do on the shell/bash
