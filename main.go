@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"flag"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
@@ -28,7 +29,14 @@ func init(){
 		os.Mkdir(path, 0755)
 	}
 	if _, err := os.Stat(dbPath); err != nil || os.IsNotExist(err) {
-		// your code here if file exists
+		db, err := sql.Open("sqlite3", dbPath)
+		if err != nil {
+			panic(err)
+		}
+		_, err = db.Exec("CREATE TABLE `remotes` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`alias` VARCHAR(255) NULL,`keypath` VARCHAR(255) NULL,`machine` VARCHAR(255) NULL)")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 

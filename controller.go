@@ -4,15 +4,22 @@ import (
 	"bufio"
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/md5"
 	"crypto/rand"
 	"database/sql"
+	"encoding/hex"
 	"fmt"
+	_ "github.com/mattn/go-sqlite3"
 	"io"
 	"os"
-	_ "github.com/mattn/go-sqlite3"
 )
 
 func save(path string){
+	if len(os.Args) < 4 {
+		help()
+		return
+	}
+
 	println("just a reminder, WE DO NOT STORE YOUR PASSWORD, YOU FORGET, WE FORGET, EVERYBODY FORGETS")
 	fmt.Printf("Please provide a password to use as a key\n")
 	pass := readline()
@@ -22,16 +29,13 @@ func save(path string){
 		return
 	}
 
-	if len(os.Args) < 4 {
-		help()
-		return
-	}
 
 	var remote Remote
 	remote.Alias = os.Args[2]
 	remote.KeyPath = path
-
-	remote.Machine = encrypt(os.Args[len(os.Args)-1], pass)
+	println(os.Args[len(os.Args)-1])
+	println(MD5(pass))
+	remote.Machine = encrypt(os.Args[len(os.Args)-1], MD5(pass))
 
 	_, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
@@ -129,4 +133,10 @@ func readline() string {
 		fmt.Println(err)
 	}
 	return string(line)
+}
+
+func MD5(text string) string {
+	algorithm := md5.New()
+	algorithm.Write([]byte(text))
+	return hex.EncodeToString(algorithm.Sum(nil))
 }
