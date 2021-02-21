@@ -10,6 +10,21 @@ import (
 	"os"
 )
 
+func save(){
+	fmt.Printf("Please provide a password to use as a key")
+	pass := readline()
+	fmt.Printf("Retype the password")
+	if pass != readline() {
+		fmt.Printf("%s","Please make sure that password matches.")
+		return
+	}
+
+	fmt.Printf("%v",os.Args)
+	return;
+	ciphertext := encrypt("line2", pass)
+	fmt.Printf("%s",ciphertext)
+}
+
 func decrypt(cipherstring string, keystring string) string {
 	// Byte array of the string
 	ciphertext := []byte(cipherstring)

@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
+	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"os"
 	"os/exec"
@@ -38,7 +39,7 @@ func main() {
 
 	_, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
-		fmt.Printf("Cannot stat database")
+		fmt.Printf("%s",err)
 		return;
 	}
 
@@ -53,16 +54,8 @@ func main() {
 	}
 
 	if saveCommand != "" {
-		fmt.Printf("Please provide a password to use as a key")
-		pass := readline()
-		fmt.Printf("Retype the password")
-		if pass != readline() {
-			fmt.Printf("%s","Please make sure that password matches.")
-			return
-		}
-
-		ciphertext := encrypt("line2", pass)
-		fmt.Printf("%s",ciphertext)
+		save()
+		return
 	}
 
 	cmd:= exec.Command("ssh","")
