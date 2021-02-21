@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 )
@@ -11,6 +12,21 @@ func main() {
 		help()
 		return
 	}
+
+	helpCommand := *flag.String("h",""," -h")
+	saveCommand := *flag.String("s", "", " -s alias_name")
+
+	flag.Parse()
+
+	if helpCommand != "" {
+		help()
+		return
+	}
+
+	if saveCommand != "" {
+		//
+	}
+
 }
 
 func help(){
