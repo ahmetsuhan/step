@@ -1,12 +1,15 @@
 package main
 
 import (
+	"database/sql"
 	"flag"
 	"fmt"
 	"log"
 	"os"
 	"os/user"
 )
+
+var dbPath string
 
 func init(){
 	usr, err := user.Current()
@@ -15,8 +18,12 @@ func init(){
 	}
 	fmt.Println( usr.HomeDir )
 	path := usr.HomeDir +"/step/"
+	dbPath = path + "data.db"
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		os.Mkdir(path, 775)
+		os.Mkdir(path, 0755)
+	}
+	if _, err := os.Stat(dbPath); err != nil || os.IsNotExist(err) {
+		// your code here if file exists
 	}
 }
 
@@ -25,6 +32,12 @@ func main() {
 	if len(args) < 2 {
 		help()
 		return
+	}
+
+	db, err := sql.Open("sqlite3", dbPath)
+	if err != nil {
+		fmt.Printf("Cannot stat database")
+		return;
 	}
 
 	helpCommand := *flag.String("h",""," -h")
