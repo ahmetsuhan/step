@@ -1,19 +1,19 @@
 # step
 Easy SSH management tool with encryption, you can think of alias for ssh connections with encryption
 
-###Arguments
+**Arguments**
 
 ````shell
     step {ALIAS} {COMMAND}
 ````
 
-###Example
+**Example**
 
 ````shell
     step customer_1 "cd /path/to/file/ ; bash update.sh"
 ````
 
-###Save New Alias
+**Save New Alias**
 
 ````shell
     step -s -i /full/path/ssh/key/ IP@server
