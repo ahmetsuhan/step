@@ -5,12 +5,15 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"database/sql"
 	"fmt"
 	"io"
 	"os"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func save(path string){
+	println("just a reminder, WE DO NOT STORE YOUR PASSWORD, YOU FORGET, WE FORGET, EVERYBODY FORGETS")
 	fmt.Printf("Please provide a password to use as a key\n")
 	pass := readline()
 	fmt.Printf("Retype the password\n")
@@ -29,7 +32,26 @@ func save(path string){
 	remote.KeyPath = path
 
 	remote.Machine = encrypt(os.Args[len(os.Args)-1], pass)
-	fmt.Printf("%s",ciphertext)
+
+	_, err := sql.Open("sqlite3", dbPath)
+	if err != nil {
+		fmt.Printf("%s",err)
+		return
+	}
+	db, err := sql.Open("sqlite3", dbPath)
+	if err != nil {
+		panic(err)
+	}
+	stmt, err := db.Prepare("INSERT INTO remotes(alias, keypath, machine) values(?,?,?)")
+	if err != nil {
+		panic(err)
+	}
+	_, err = stmt.Exec(remote.Alias, remote.KeyPath, remote.Machine)
+	if err != nil {
+		panic(err)
+	}
+	println("operation successfully")
+
 }
 
 func decrypt(cipherstring string, keystring string) string {

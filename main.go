@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"flag"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
@@ -35,11 +34,6 @@ func init(){
 
 func main() {
 
-	_, err := sql.Open("sqlite3", dbPath)
-	if err != nil {
-		fmt.Printf("%s",err)
-		return
-	}
 
 	helpCommand := flag.String("h",""," -h")
 	saveCommand := flag.String("s", "", " -s alias_name")
