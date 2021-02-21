@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 	"os/user"
 )
 
@@ -34,7 +35,8 @@ func main() {
 		return
 	}
 
-	db, err := sql.Open("sqlite3", dbPath)
+
+	_, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		fmt.Printf("Cannot stat database")
 		return;
@@ -62,6 +64,12 @@ func main() {
 		ciphertext := encrypt("line2", pass)
 		fmt.Printf("%s",ciphertext)
 	}
+
+	cmd:= exec.Command("ssh","")
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	_ = cmd.Run() // add error checking
 
 }
 
