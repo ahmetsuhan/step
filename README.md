@@ -7,10 +7,16 @@ Easy SSH management tool with encryption, you can think of alias for ssh connect
     step {ALIAS} {COMMAND}
 ````
 
-**Example**
+**Example Remote Code Execution**
 
 ````shell
-    step customer_1 "cd /path/to/file/ ; bash update.sh"
+step customer_1 "cd /path/to/file/ ; bash update.sh"
+````
+
+**Example Connection**
+
+````shell
+    step customer_1
 ````
 
 **Save New Alias**
